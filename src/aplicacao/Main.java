@@ -6,76 +6,61 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
+import entidades.Contrato;
+import entidades.Departamento;
+import entidades.Trabalhador;
+import entidades_enum.NivelTrabalhador;
+
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		//Pedido p = new Pedido(1, new Date(),StatusVenda.AGUARDANDO_PAGAMENTO);
 		
-		Date x1 = new Date();
-		Date x2 = new Date(System.currentTimeMillis());
-		
-		Date y1 = sdf1.parse("09/12/2020");
-		Date y2 = sdf2.parse("09/12/2020 18:44:10");
-		
-		System.out.println(sdf2.format(x1));
-		System.out.println(sdf2.format(x2));
-		System.out.println(sdf2.format(y1));
-		System.out.println(sdf2.format(y2));
-		//System.out.println(y2);
-		//System.out.println(y2);
-		
-		/*
-		List<String> lista = new ArrayList<>();
-		lista.add("Expedito");
-		lista.add("João");
-		lista.add("Pedro");
-		lista.add(2,"Ana");
-		lista.remove(1);
-		for (String x: lista) {
-			System.out.println(x);
+		//System.out.println(p);
+		System.out.print("Entre com o nome do Departamento");
+		String nomeDepartamento = sc.nextLine();
+		System.out.println("Dados do Trabalhador");
+		System.out.print("Nome do Trabalhador");
+		String nomeTrabalhador = sc.nextLine();
+		System.out.print("Nível do Trabalhador");
+		String nivelTrabalhador = sc.nextLine();
+		System.out.print("Salário Base do Trabalhador");
+		double salarioBase = sc.nextDouble();
+		Trabalhador t = new Trabalhador(nomeTrabalhador,NivelTrabalhador.valueOf(nivelTrabalhador),salarioBase,new Departamento(nomeDepartamento));
+		System.out.print("Quantos contratos para esse trabalhador");
+		int numContratos = sc.nextInt();
+		for (int i = 1; i <= numContratos; i++) {
+			System.out.println("Entre com os dados do contrato:  "+i);
+			System.out.print("Data");
+			Date contratoData = sdf.parse(sc.next());	
+			System.out.print("Valor por Hora");
+			double valor = sc.nextDouble();	
+			System.out.print("Número de Horas");
+			int horas = sc.nextInt();	
+			Contrato c = new Contrato(contratoData,valor,horas);
+			t.adicionarContrato(c);
 		}
-		
-		lista.removeIf(x -> x.charAt(0) == 'P');
-		for (String x: lista) {
-			System.out.println(x);
-		}*/
-		/*Produtos p = new Produtos();
-		System.out.println("Entre com os valores");
-		System.out.print("Nome: ");
-		p.setNome(sc.nextLine());
-		System.out.print("Preço: ");
-		p.setPreco(sc.nextDouble());
-		System.out.print("Estoque: ");
-		p.setQtd(sc.nextDouble());
-		
-		String x = p.toString();
-		System.out.println(x);
-		sc.close();*/
-		/*System.out.println("Informe a quantidade de objetos");
-		int n = sc.nextInt();
-		Produtos[] vet = new Produtos[n];
-		
-		for (int i = 0; i < n; i++) {
-			sc.nextLine();
-			System.out.println("Informe nome");
-			String nome = sc.nextLine();
-			System.out.println("Informe preco");
-			double preco = sc.nextDouble();
-			System.out.println("Informe qtd");
-			double qtd = sc.nextDouble();
-			
-			vet[i] = new Produtos(nome,preco,qtd);
-			//media += vet[i];
-		}
+		System.out.println();
+		System.out.print("informe mês e ano para calcular (MM/AAAA)");
+		String mes_ano = sc.next();
+		int mes = Integer.parseInt(mes_ano.substring(0, 2));
+		int ano = Integer.parseInt(mes_ano.substring(3));
+		System.out.println("Nome: "+t.getNome());
+		System.out.println("Departamento: "+t.getDepartamento().getNome());
+		System.out.println("Total de Ganhos para o mês: "+mes+" e ano: "+ano+": ");
+		System.out.println(t.somar(ano, mes));
 		
 		
-		*/
 		
-      System.out.println("Boom dia");
+		
+		
+		
+		
+		
 	}
 
 }
